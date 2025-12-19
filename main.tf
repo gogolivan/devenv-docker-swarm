@@ -312,31 +312,3 @@ module "localstack_stack" {
 
   depends_on = [module.localstack_stack]
 }*/
-
-module "prometheus_stack" {
-  count = var.stack_service_replicas_env_config.PROMETHEUS_REPLICAS > 0 ? 1 : 0
-
-  source = "./modules/docker-swarm-stack"
-
-  stack_name   = "prometheus"
-  compose_file = "docker-compose.prometheus.yml"
-  replicas = {
-    PROMETHEUS_REPLICAS = var.stack_service_replicas_env_config.PROMETHEUS_REPLICAS
-  }
-
-  depends_on = [terraform_data.swarm_ready]
-}
-
-module "grafana_stack" {
-  count = var.stack_service_replicas_env_config.GRAFANA_REPLICAS > 0 ? 1 : 0
-
-  source = "./modules/docker-swarm-stack"
-
-  stack_name   = "grafana"
-  compose_file = "docker-compose.grafana.yml"
-  replicas = {
-    GRAFANA_REPLICAS = var.stack_service_replicas_env_config.GRAFANA_REPLICAS
-  }
-
-  depends_on = [terraform_data.swarm_ready, module.prometheus_stack]
-}

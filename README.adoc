@@ -22,11 +22,6 @@
 :temporal-ui-version: 2.43.3
 :temporal-admin-tools-version: 1.29
 :localstack-version: 4.10.0
-:prometheus-version: 3.7.3
-:grafana-version: 12.2.1
-:grafana-loki-version: 3.5.8
-:grafana-tempo-version: 2.9.0
-:grafana-promtail-version: 3.5.8
 
 This project is intended to help developers quickly deploy *backing services* commonly used during the development cycle.
 
@@ -37,8 +32,7 @@ It is always possible to run all stacks manually using the `docker stack deploy`
 A *Dev Containers* setup for local development is provided.
 
 == Topics
-_devcontainers_, _docker-swarm_, _terraform_, _redis_, _postgres_, _mongodb_, _keycloak_, _grafana_, _loki_, _tempo_,
-_prometheus_, _traefik_, _portainer_, _kafka_, _temporal_, _localstack_, neo4j, influxdb
+_devcontainers_, _docker-swarm_, _terraform_, _redis_, _postgres_, _mongodb_, _keycloak_, _traefik_, _portainer_, _kafka_, _temporal_, _localstack_, neo4j, influxdb
 
 == Prerequisites
 === https://containers.dev/[Dev Containers]
@@ -185,16 +179,6 @@ http://{host}:7687 | link:docker-compose.neo4j.yml[] | Neo4j ({neo4j-version}) |
 - S3 ({localstack-version}) +
 - IAM ({localstack-version}) +
 - STS ({localstack-version}) | LOCALSTACK_REPLICAS
-
-|<<prometheus>> | http://{host}:9090 | link:docker-compose.prometheus.yml[] | Prometheus ({prometheus-version}) | PROMETHEUS_REPLICAS
-
-|<<grafana>> | http://{host}:3000 +
-http://{host}:3100 +
-http://{host}:3200 | link:docker-compose.grafana.yml[] | 
-- Grafana {grafana-version} +
-- Loki ({grafana-loki-version}) +
-- Tempo ({grafana-tempo-version}) +
-- Promtail ({grafana-promtail-version}) | GRAFANA_REPLICAS
 
 |===
 
@@ -403,24 +387,6 @@ Local AWS Services
 [source,shell]
 ----
 docker stack deploy --resolve-image changed -c docker-compose.localstack.yml localstack
-----
-
-[[prometheus]]
-=== https://prometheus.io/[Prometheus]
-Monitoring and alerting toolkit
-
-[source,shell]
-----
-docker stack deploy --resolve-image changed -c docker-compose.prometheus.yml prometheus
-----
-
-[[grafana]]
-=== https://grafana.com/[Grafana]
-Observability
-
-[source,shell]
-----
-docker stack deploy --resolve-image changed -c docker-compose.grafana.yml grafana
 ----
 
 
