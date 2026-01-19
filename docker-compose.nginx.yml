@@ -1,0 +1,20 @@
+services:
+  nginx:
+    image: nginx:1.29.3
+    restart: unless-stopped
+    ports:
+      - "7233:7233" # Temporal GRPC
+    networks:
+      - nginx
+    configs:
+      - source: nginx-config
+        target: /etc/nginx/nginx.conf
+
+networks:
+  nginx:
+    name: nginx
+    attachable: true
+
+configs:
+  nginx-config:
+    file: ./config/nginx/nginx.conf
