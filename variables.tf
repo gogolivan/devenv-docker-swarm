@@ -18,6 +18,7 @@ variable "stack_service_replicas_env_config" {
     MAILDEV_REPLICAS    = 1
     TEMPORAL_REPLICAS   = 1
     LOCALSTACK_REPLICAS = 1
+    OLLAMA_REPLICAS     = 1
   }
 }
 

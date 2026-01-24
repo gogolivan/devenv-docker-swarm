@@ -1,0 +1,21 @@
+services:
+  ollama:
+    image: ollama/ollama:0.15.0
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama:/root/.ollama
+    networks:
+      - ollama
+    deploy:
+      replicas: ${OLLAMA_REPLICAS:-1}
+      restart_policy:
+        condition: none
+
+networks:
+  ollama:
+    name: ollama
+    attachable: true
+
+volumes:
+  ollama:

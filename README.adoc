@@ -22,8 +22,9 @@
 :temporal-ui-version: 2.43.3
 :temporal-admin-tools-version: 1.29
 :localstack-version: 4.10.0
+:ollama-version: 0.15.0
 
-This project is intended to help developers quickly deploy *backing services* commonly used during the development cycle.
+This project is intended to help developers quickly deploy *backing services* used during the development cycle.
 
 It contains _Terraform_ modules for deploying _Docker_ services into a _Swarm_ cluster. See <<automated-start>>.
 
@@ -179,6 +180,8 @@ http://{host}:7687 | link:docker-compose.neo4j.yml[] | Neo4j ({neo4j-version}) |
 - S3 ({localstack-version}) +
 - IAM ({localstack-version}) +
 - STS ({localstack-version}) | LOCALSTACK_REPLICAS
+
+|<<ollama>> | http://{host}:11434 | link:docker-compose.ollama.yml[] | Ollama ({ollama-version}) | OLLAMA_REPLICAS
 
 |===
 
@@ -387,6 +390,15 @@ Local AWS Services
 [source,shell]
 ----
 docker stack deploy --resolve-image changed -c docker-compose.localstack.yml localstack
+----
+
+[[ollama]]
+=== https://ollama.com/[Ollama]
+Local LLM inference server
+
+[source,shell]
+----
+docker stack deploy --resolve-image changed -c docker-compose.ollama.yml ollama
 ----
 
 

@@ -116,7 +116,7 @@ module "mongo_stack" {
 }
 
 module "postgres_stack" {
-  count = var.stack_service_replicas_env_config.POSTGRES_REPLICAS > 0 ? 1 : 0
+  count = var.stack_service_replicas_env_config.POSTGRES_REPLICAS
 
   source = "./modules/docker-swarm-stack"
 
@@ -141,7 +141,7 @@ module "postgres_stack" {
 }
 
 module "redis_stack" {
-  count = var.stack_service_replicas_env_config.REDIS_REPLICAS > 0 ? 1 : 0
+  count = var.stack_service_replicas_env_config.REDIS_REPLICAS
 
   source = "./modules/docker-swarm-stack"
 
@@ -166,7 +166,7 @@ module "redis_stack" {
 }
 
 module "influxdb_stack" {
-  count = var.stack_service_replicas_env_config.INFLUXDB_REPLICAS > 0 ? 1 : 0
+  count = var.stack_service_replicas_env_config.INFLUXDB_REPLICAS
 
   source = "./modules/docker-swarm-stack"
 
@@ -191,7 +191,7 @@ module "influxdb_stack" {
 }
 
 module "neo4j_stack" {
-  count = var.stack_service_replicas_env_config.NEO4J_REPLICAS > 0 ? 1 : 0
+  count = var.stack_service_replicas_env_config.NEO4J_REPLICAS
 
   source = "./modules/docker-swarm-stack"
 
@@ -212,7 +212,7 @@ module "neo4j_stack" {
 }
 
 module "keycloak_stack" {
-  count = var.stack_service_replicas_env_config.KEYCLOAK_REPLICAS > 0 ? 1 : 0
+  count = var.stack_service_replicas_env_config.KEYCLOAK_REPLICAS
 
   source = "./modules/docker-swarm-stack"
 
@@ -239,7 +239,7 @@ module "keycloak_stack" {
 }
 
 module "kafka_stack" {
-  count = var.stack_service_replicas_env_config.KAFKA_REPLICAS > 0 ? 1 : 0
+  count = var.stack_service_replicas_env_config.KAFKA_REPLICAS
 
   source = "./modules/docker-swarm-stack"
 
@@ -253,7 +253,7 @@ module "kafka_stack" {
 }
 
 module "maildev_stack" {
-  count = var.stack_service_replicas_env_config.MAILDEV_REPLICAS > 0 ? 1 : 0
+  count = var.stack_service_replicas_env_config.MAILDEV_REPLICAS
 
   source = "./modules/docker-swarm-stack"
 
@@ -278,7 +278,7 @@ module "maildev_stack" {
 }
 
 module "temporal_stack" {
-  count = var.stack_service_replicas_env_config.TEMPORAL_REPLICAS > 0 ? 1 : 0
+  count = var.stack_service_replicas_env_config.TEMPORAL_REPLICAS
 
   source = "./modules/docker-swarm-stack"
 
@@ -302,6 +302,20 @@ module "localstack_stack" {
   compose_file = "docker-compose.localstack.yml"
   replicas = {
     LOCALSTACK_REPLICAS = var.stack_service_replicas_env_config.LOCALSTACK_REPLICAS
+  }
+
+  depends_on = [terraform_data.swarm_ready]
+}
+
+module "ollama_stack" {
+  count = var.stack_service_replicas_env_config.OLLAMA_REPLICAS
+
+  source = "./modules/docker-swarm-stack"
+
+  stack_name   = "ollama"
+  compose_file = "docker-compose.ollama.yml"
+  replicas = {
+    OLLAMA_REPLICAS = var.stack_service_replicas_env_config.OLLAMA_REPLICAS
   }
 
   depends_on = [terraform_data.swarm_ready]
